@@ -3,12 +3,14 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 server:
-  port: 8762
+  port: 80
 spring:
   application:
     name: service-hi
+  mvc:
+    static-path-pattern:/static/**  
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/iyue_info
+    url: jdbc:mysql://localhost:3306/iyue_info?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 

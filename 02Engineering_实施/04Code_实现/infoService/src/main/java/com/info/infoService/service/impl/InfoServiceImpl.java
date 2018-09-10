@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.info.infoService.dao.BaseDao;
+import com.info.baseService.dao.BaseDao;
 import com.info.infoService.model.Info;
 import com.info.infoService.service.InfoService;
 

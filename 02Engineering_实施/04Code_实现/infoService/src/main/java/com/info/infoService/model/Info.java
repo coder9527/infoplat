@@ -1,6 +1,8 @@
 package com.info.infoService.model;
 
-public class Info {
+import java.io.Serializable;
+
+public class Info implements Serializable{
 	
 	private String id;
 	private String title;

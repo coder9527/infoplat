@@ -12,19 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.info.infoService.model.Info;
 import com.info.infoService.service.InfoService;
 
 
 @SpringBootApplication
 /*@EnableEurekaClient*/
+@CrossOrigin
 @RestController
 public class InfoController {
 	
@@ -89,5 +88,49 @@ public class InfoController {
 		//
 		infoService.saveInfo(info);
 	}
+	
+	@RequestMapping("/getInfosByColumn")
+	@ResponseBody
+	public List<Info> getInfosByColumn(@RequestParam String columnId){
+		return infoService.getInfosByColumn(columnId);
+	}
+	
+	
+	
+	/**
+	 * 获取门户信息列表 
+	 * author
+	 */
+	
+	@RequestMapping("/getPortalInfos")
+	public String getPortalInfos(){
+		//return infoService.getInfosByColumn(columnId);
+		JSONObject ret=new JSONObject();
+		
+		ret.put("code", 1);
+		
+		JSONArray banners=new JSONArray();
+		JSONObject banner=new JSONObject();
+		
+		banner.put("pic_path", "http://baidi.com");
+		banner.put("pic_name", "新闻1");
+		
+		banners.add(banner);
+		
+		ret.put("banners", banners);
+		//hotNews
+		ret.put("hotNews",JSONArray.parseArray(JSON.toJSONString(infoService.getInfosByColumn("001"))));
+		//culturalNews
+		ret.put("culturalNews",JSONArray.parseArray(JSON.toJSONString(infoService.getInfosByColumn("002"))));
+		//yogaBooks
+		ret.put("yogaBooks",JSONArray.parseArray(JSON.toJSONString(infoService.getInfosByColumn("001"))));
+		//yogaSchool
+		ret.put("yogaSchool",JSONArray.parseArray(JSON.toJSONString(infoService.getInfosByColumn("001"))));
+		
+		
+		return ret.toJSONString();
+	}
+	
+	
 	
 }

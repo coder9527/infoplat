@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.info.baseService.dao.BaseDao;
 import com.info.infoService.model.Info;
 import com.info.infoService.service.InfoService;
+import com.info.repertory.model.Repertory;
 
 
 @Service
@@ -29,6 +30,18 @@ public class InfoServiceImpl implements InfoService{
 		info.setId(uuid.toString().replace("-", ""));
 		baseDao.save("infos", "id", info);
 		
+	}
+
+	@Override
+	public List<Info> getInfosByColumn(String columnId) {
+		// TODO Auto-generated method stub
+		return baseDao.selectByCriteria("infos", baseDao.createCriteria().eq("column_id", columnId), Info.class);
+	}
+
+	@Override
+	public List<Info> getCurrentInfos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

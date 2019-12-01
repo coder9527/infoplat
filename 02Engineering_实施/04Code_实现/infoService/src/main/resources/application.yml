@@ -13,4 +13,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/iyue_info?useUnicode=true&characterEncoding=UTF-8
     username: root
-    password: 
+    password:
+  http:
+    multipart:
+      maxFileSize: 100Mb
+      maxRequestSize: 100Mb

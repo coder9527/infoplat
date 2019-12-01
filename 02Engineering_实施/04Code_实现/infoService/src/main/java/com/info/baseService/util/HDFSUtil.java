@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class HDFSUtil {
 
 	private static FileSystem hdfs;
 	
-	private static final String fdfsURI="hdfs://192.168.198.137:9000";
+	private static final String fdfsURI="hdfs://192.168.198.137:9000/";
 	
 	
 	/**
@@ -45,19 +46,19 @@ public class HDFSUtil {
 	 * @param hdfsPath
 	 * @return
 	 */
-	public boolean uploadToHDFS(String localFilename, String hdfsPath) {
+	public boolean uploadToHDFS(String fileName, String hdfsPath,InputStream is) {
 		try {
 			// 如果路径不存在就创建文件夹
 			mkdir(hdfsPath);
-			File file = new File(localFilename);
-			FileInputStream is = new FileInputStream(file);
+			//File file = new File(localFilename);
+			//FileInputStream is = new FileInputStream(file);
  
 			// 如果hdfs上已经存在文件，那么先删除该文件
-			if (this.checkFileExist(hdfsPath + "/" + file.getName())) {
-				delete(hdfsPath + "/" + file.getName());
+			if (this.checkFileExist(hdfsPath + "/" + fileName)) {
+				delete(hdfsPath + "/" + fileName);
 			}
  
-			Path f = new Path(hdfsPath + "/" + file.getName());
+			Path f = new Path(hdfsPath + "/" + fileName);
  
 			FSDataOutputStream os = hdfs.create(f, true);
 			byte[] buffer = new byte[10240000];
@@ -77,7 +78,7 @@ public class HDFSUtil {
  
 			is.close();
 			os.close();
-			System.out.println((new Date()).toLocaleString() + ": Write content of file " + file.getName()
+			System.out.println((new Date()).toLocaleString() + ": Write content of file " + fileName
 					+ " to hdfs file " + f.getName() + " success");
 			return true;
 		} catch (Exception e) {

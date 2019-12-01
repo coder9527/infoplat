@@ -15,5 +15,14 @@ public interface FileCateService {
 	public List<FileCate> getFileCatesByParentId(String parentId);
 	
 	
+	
+	public List<FileCate>  getchildCatesList();
+	
+	
 	public FileCate getFileCate(String id);
+	
+	
+	public void saveFileCate(FileCate fileCate);
+	
+	public void removeFileCate(String id);
 }

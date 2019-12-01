@@ -16,23 +16,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.info.App;
 import com.info.baseService.util.HDFSUtil;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.util.Date;
+import java.util.List;
 
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.conf.*;
 
 @SpringBootApplication
 /*@EnableEurekaClient*/
-@CrossOrigin
 @RestController
 @ResponseBody
 public class HFDFSUploaderController {
@@ -41,19 +42,47 @@ public class HFDFSUploaderController {
 	
 	
 	
-	@RequestMapping("/uploadFDFS")
-	public String uploadDataBlock(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	@RequestMapping(value="/uploadFDFS",headers = "Content-Type= multipart/form-data")
+	public String uploadDataBlock(HttpServletRequest request){
 		System.out.println("uploadFDFS----->>>");
 		
-		String uri="hdfs://localhost:50070/";
 		
-		 // 创建Configuration对象
+		MultipartHttpServletRequest params=((MultipartHttpServletRequest) request); 
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request)    
+                .getFiles("file"); 
+		
+		
+		MultipartFile file=files.get(0);
+		
+		String fileName=file.getOriginalFilename();
+		String filePath="/demo";
+		
+		HDFSUtil hdfsUtil=new HDFSUtil();
+		
+		try {
+			hdfsUtil.getFileSystem();
+			hdfsUtil.uploadToHDFS(fileName, filePath,file.getInputStream());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println("uploadFDFS success");
+		
+		
+		/*
+		String uri="hdfs://192.168.198.137:9000/";
+		// 创建Configuration对象
        
-       // 创建FileSystem对象
+       // 创建	FileSystem对象
 
        FileSystem fs;
        FileStatus[] status = null;
        Path path=new Path(uri);
+       
+       
+       
 		try {
 			Configuration conf=new Configuration();
 			
@@ -72,8 +101,10 @@ public class HFDFSUploaderController {
 			System.out.println("---->>>>>>>:"+file.getPath());
 		}
 		
+	
 		
-		return "hellow fdfs";
+		return "";*/
+		return filePath+"/"+file.getOriginalFilename();
 	}
 	
 	

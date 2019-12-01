@@ -2,7 +2,11 @@ package com.info.fileService.model;
 
 public class FileInfo {
 	
-    private String icon;
+	private String id;
+	
+   
+
+	private String icon;
     
     private String title;
     
@@ -24,6 +28,10 @@ public class FileInfo {
     
     private String monthDownCount;
     
+    private String weekDownCount;
+    
+    private String totalDownCount;
+    
     private String score;
     
     private String softDesc;
@@ -31,9 +39,45 @@ public class FileInfo {
     private String softPics;
     
     private String downUrl;
+    
+    private String cateNo;
+    
+    
+    public String getCateNo() {
+		return cateNo;
+	}
+
+	public String getWeekDownCount() {
+		return weekDownCount;
+	}
+
+	public void setWeekDownCount(String weekDownCount) {
+		this.weekDownCount = weekDownCount;
+	}
+
+	public void setCateNo(String cateNo) {
+		this.cateNo = cateNo;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getIcon() {
 		return icon;
+	}
+	
+
+	public String getTotalDownCount() {
+		return totalDownCount;
+	}
+
+	public void setTotalDownCount(String totalDownCount) {
+		this.totalDownCount = totalDownCount;
 	}
 
 	public void setIcon(String icon) {

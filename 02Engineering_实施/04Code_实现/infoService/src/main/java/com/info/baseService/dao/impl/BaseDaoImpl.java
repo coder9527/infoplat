@@ -136,6 +136,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> ,Serializable {
         StringBuilder criteriaSQL; //从where开始的条件sql
         List<Object> param; //参数列表
         String limitStr; //限制条数
+        String orderStr;
 
         public Criteria(){
             criteriaSQL = new StringBuilder("");
@@ -143,6 +144,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> ,Serializable {
             not = false;
             begin = true;
             limitStr = "";
+            orderStr="";
         }
 
         public Criteria not(){
@@ -222,12 +224,30 @@ public class BaseDaoImpl<T> implements BaseDao<T> ,Serializable {
             limitStr = " limit " + start + "," + row;
             return this;
         }
+        
+        @Override
+        public BaseDao.Criteria order(String [] columns,String sortType) {
+        	
+        	
+        	
+        	for(int i=0;i<columns.length;i++){
+        		if(i==0){
+        			orderStr = " order by "+columns[i];
+        		}else{
+        			orderStr += ","+columns[i];
+        		}
+        	}
+        	
+        	orderStr+=(" "+sortType);
+        	
+            return this;
+        }
 
         public List<Object> getParam(){
             return this.param;
         }
         public StringBuilder getCriteriaSQL(){
-            return new StringBuilder(criteriaSQL.toString()+limitStr);
+            return new StringBuilder(criteriaSQL.toString()+limitStr+orderStr);
         }
     }
 }

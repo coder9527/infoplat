@@ -13,6 +13,22 @@ public interface FileInfoService {
 	public List<FileInfo> getFileInfos();
 	
 	
+	public List<FileInfo> getFileInfoScore();
+	
+	public List<FileInfo>getFileInfosCateNo(String CateNo);
+	
+	public List<FileInfo>getFileInfoRank(String type);
+	
+	
 	public FileInfo getFileInfo(String id);
+	
+	public List<FileInfo> getFileInfoSearch(String searchTxt);
+	
+	
+	public void saveFileInfo(FileInfo fileInfo);
+	
+	public void removeFile(String id);
+	
+	public List<FileInfo> getFileInfoNews(String type);
 
 }

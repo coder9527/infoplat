@@ -101,6 +101,13 @@ public interface BaseDao<T> extends Serializable{
          * @param row 记录数
          */
         Criteria limit(int start, int row);
+        
+        /**
+         * 排序字段
+         * @param start 开始位置
+         * @param row 记录数
+         */
+        Criteria order(String [] columes,String sortType);
 
         /**
          * 获取参数列表
